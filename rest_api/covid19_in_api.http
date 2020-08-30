@@ -1,0 +1,4 @@
+###
+
+GET {{baseUrl}}/stats/latest
+Accept: application/json

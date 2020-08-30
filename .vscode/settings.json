@@ -1,0 +1,13 @@
+{
+    "rest-client.environmentVariables": {
+        "local": {
+            "baseUrl": "https://api.rootnet.in/covid19-in/",
+        },
+        "production": {
+        }
+    },
+    "editor.fontFamily": "Operator Mono",
+    "editor.fontSize": 14,
+    "editor.fontWeight": "300",
+    "editor.fontLigatures": true,
+}
