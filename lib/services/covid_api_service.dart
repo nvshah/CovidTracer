@@ -18,6 +18,9 @@ abstract class CovidApiService extends ChopperService {
       ],
       //Converts data to & from JSON and adds the application/json header
       converter: JsonConverter(),
+      interceptors: [
+        HttpLoggingInterceptor(),
+      ],
     );
     return _$CovidApiService(client);
   }
