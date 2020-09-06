@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-//import 'package:intl/intl.dart';
+import 'package:intl/intl.dart';
 
 import '../repositories/status_card_data.dart';
 import '../services/covid_api.dart';
@@ -22,25 +22,34 @@ class StatusCard extends StatelessWidget {
       color: Color(0xFFFFB74D),
       image: 'assets/fever.png',
     ),
-    Status.recovered: StatusCardData(
-      title: 'Recovered',
-      color: Color(0xFFA5D6A7),
-      image: 'assets/suspect.png',
-    ),
+    // Status.recovered: StatusCardData(
+    //   title: 'Recovered',
+    //   color: Color(0xFFA5D6A7),
+    //   image: 'assets/suspect.png',
+    // ),
     Status.deaths: StatusCardData(
       title: 'Deaths',
       color: Color(0xFFE57373),
       image: 'assets/death.png',
     ),
-    // Endpoint.recovered: _EndpointCardData(
-    //   title: 'Recovered',
-    //   color: Color(0xFFAED581),
-    //   image: 'assets/patient.png',
-    // ),
+    Status.recovered: StatusCardData(
+      title: 'Recovered',
+      color: Color(0xFFAED581),
+      image: 'assets/patient.png',
+    ),
   };
   
   //getters for current status - card details
   StatusCardData get _data => _cardDetails[status];
+
+  ///Format Number by adding comma to seperate thousand gaps
+  String get _formattedNumber {
+    if (numbers == null) {
+      return '-';
+    }
+    final formatter = NumberFormat('#,###,###,###');
+    return formatter.format(numbers);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -84,7 +93,7 @@ class StatusCard extends StatelessWidget {
                     ),
                     //Numbers
                     Text(
-                      numbers.toString(),
+                      _formattedNumber,
                       style: Theme.of(context).textTheme.headline4.copyWith(
                             color: _data.color,
                             fontWeight: FontWeight.w300,
