@@ -5,14 +5,15 @@ import '../repositories/status_card_data.dart';
 import '../services/covid_api.dart';
 
 class StatusCard extends StatelessWidget {
-  final Status status; 
+  final Status status;
   final int numbers;
 
-  StatusCard({Key key, @required this.status, @required this.numbers}) : super(key: key) ;
+  StatusCard({Key key, @required this.status, @required this.numbers})
+      : super(key: key);
 
   //Mapper to get rest & static data of each status
   static Map<Status, StatusCardData> _cardDetails = {
-     Status.total: StatusCardData(
+    Status.total: StatusCardData(
       title: 'Cases',
       color: Color(0xFFFFF492),
       image: 'assets/count.png',
@@ -38,7 +39,7 @@ class StatusCard extends StatelessWidget {
       image: 'assets/patient.png',
     ),
   };
-  
+
   //getters for current status - card details
   StatusCardData get _data => _cardDetails[status];
 
@@ -56,7 +57,7 @@ class StatusCard extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(
         horizontal: 8.0,
-        vertical: 4.0,
+        vertical: 6.0,
       ),
       child: Card(
         child: Padding(

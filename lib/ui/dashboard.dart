@@ -82,6 +82,7 @@ class _DashboardState extends State<Dashboard> {
                       ? _covidData.statusFigures[_statuses[idx]]
                       : null,
                 ),
+                padding: EdgeInsets.symmetric(vertical: 8.0),
               ),
             ),
           ],
