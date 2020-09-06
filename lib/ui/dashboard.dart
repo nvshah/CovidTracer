@@ -61,28 +61,31 @@ class _DashboardState extends State<Dashboard> {
       appBar: AppBar(
         title: Text('Covid Tracer'),
       ),
-      body: Column(
-        children: <Widget>[
-          //Last Updated Date from Server
-          LastUpdatedStatus(
-            date: _covidData?.lastRefreshedDate,
-          ),
-          //Statuses
-          Expanded(
-            //Here ListView is used under Column, so need to provide specific height to ListView
-            //otherwise it will give error as Column can grow as much as it can & Listview will not end up finding it's height
-            //via Expanded we will ensure that Listview take rest of screen height
-            child: ListView.builder(
-              itemCount: _statuses.length,
-              itemBuilder: (ctxt, idx) => StatusCard(
-                status: _statuses[idx],
-                numbers: _covidData != null
-                    ? _covidData.statusFigures[_statuses[idx]]
-                    : null,
+      body: RefreshIndicator(
+        onRefresh: _updateData,
+        child: Column(
+          children: <Widget>[
+            //Last Updated Date from Server
+            LastUpdatedStatus(
+              date: _covidData?.lastRefreshedDate,
+            ),
+            //Statuses
+            Expanded(
+              //Here ListView is used under Column, so need to provide specific height to ListView
+              //otherwise it will give error as Column can grow as much as it can & Listview will not end up finding it's height
+              //via Expanded we will ensure that Listview take rest of screen height
+              child: ListView.builder(
+                itemCount: _statuses.length,
+                itemBuilder: (ctxt, idx) => StatusCard(
+                  status: _statuses[idx],
+                  numbers: _covidData != null
+                      ? _covidData.statusFigures[_statuses[idx]]
+                      : null,
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
