@@ -7,7 +7,8 @@ class DataRepository{
   final CovidApiService covidApiService;
 
   DataRepository({@required this.covidApiService,});
-
+  
+  ///Get stats data from server
   Future<CovidData> getData() async{
     //get data via api-service
     final response = await covidApiService.getStats();
@@ -19,6 +20,7 @@ class DataRepository{
 
       if(body != null){
         final statsCount = body['data'];
+        //2020-08-30T13:30:21.667Z <- date format sample -> yyyy-MM-ddThh:mm::ss.....
         final date = DateTime.tryParse(body['lastRefreshed']);
 
         //We get data we wanted

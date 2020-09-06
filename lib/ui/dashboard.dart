@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -6,6 +8,7 @@ import '../models/covid_data.dart';
 import './status_card.dart';
 import '../services/covid_api.dart';
 import './last_updated_status.dart';
+import './show_alert_dialog.dart';
 
 class Dashboard extends StatefulWidget {
   @override
@@ -24,12 +27,32 @@ class _DashboardState extends State<Dashboard> {
 
   //Get latest data from server
   Future<void> _updateData() async {
-    final dataRepository = Provider.of<DataRepository>(context, listen: false);
-    final covidData = await dataRepository.getData();
+    try {
+      final dataRepository =
+          Provider.of<DataRepository>(context, listen: false);
+      final covidData = await dataRepository.getData();
 
-    setState(() {
-      _covidData = covidData;
-    });
+      setState(() {
+        _covidData = covidData;
+      });
+    } on SocketException catch (_) {
+      //await showAlertDialog   // --> Since we are not doing anythin after this so we can skip using await
+      showAlertDialog(
+        context: context,
+        title: 'Connection Error !',
+        content:
+            'Could not fetch the data. Please check data connection & try again later.',
+        defaultActionText: 'OK',
+      );
+    } catch (_) {
+      //Incase we get 4xx or 5xx from server | parsing error | Missign APi Service
+      showAlertDialog(
+        context: context,
+        title: 'Unknown Error !',
+        content: 'Please contact support or try in a while.',
+        defaultActionText: 'OK',
+      );
+    }
   }
 
   @override
@@ -49,7 +72,9 @@ class _DashboardState extends State<Dashboard> {
             itemCount: _statuses.length,
             itemBuilder: (ctxt, idx) => StatusCard(
               status: _statuses[idx],
-              numbers: _covidData != null ? _covidData.statusFigures[_statuses[idx]] : null,
+              numbers: _covidData != null
+                  ? _covidData.statusFigures[_statuses[idx]]
+                  : null,
             ),
           ),
         ],
