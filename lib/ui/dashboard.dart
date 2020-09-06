@@ -5,6 +5,7 @@ import '../repositories/data_repository.dart';
 import '../models/covid_data.dart';
 import './status_card.dart';
 import '../services/covid_api.dart';
+import './last_updated_status.dart';
 
 class Dashboard extends StatefulWidget {
   @override
@@ -37,23 +38,22 @@ class _DashboardState extends State<Dashboard> {
       appBar: AppBar(
         title: Text('Covid Tracer'),
       ),
-      body: ListView.builder(
-        itemBuilder: (ctxt, idx) => StatusCard(
-          status: _statuses[idx],
-          numbers: _covidData.statusFigures[_statuses[idx]],
-        ),
-        itemCount: _statuses.length,
-        //padding: EdgeInsets.all(8.0),
+      body: Column(
+        children: <Widget>[
+          //Last Updated Date from Server
+          LastUpdatedStatus(
+            date: _covidData?.lastRefreshedDate,
+          ),
+          //Statuses
+          ListView.builder(
+            itemCount: _statuses.length,
+            itemBuilder: (ctxt, idx) => StatusCard(
+              status: _statuses[idx],
+              numbers: _covidData != null ? _covidData.statusFigures[_statuses[idx]] : null,
+            ),
+          ),
+        ],
       ),
-      // floatingActionButton: FloatingActionButton(
-      //   child: Icon(Icons.add),
-      //   onPressed: () async {
-      //     // The JSONPlaceholder API always responds with whatever was passed in the POST request
-      //     final covidData =
-      //          await Provider.of<DataRepository>(context).getData();
-      //     print(covidData.lastRefreshedDate.toString());
-      //   },
-      // ),
     );
   }
 }
