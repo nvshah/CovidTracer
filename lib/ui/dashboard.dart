@@ -1,11 +1,10 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../repositories/data_repository.dart';
 import '../models/covid_data.dart';
 import './status_card.dart';
+import '../services/covid_api.dart';
 
 class Dashboard extends StatefulWidget {
   @override

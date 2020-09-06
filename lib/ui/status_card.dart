@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 //import 'package:intl/intl.dart';
 
 import '../repositories/status_card_data.dart';
-import '../models/covid_data.dart';
+import '../services/covid_api.dart';
 
 class StatusCard extends StatelessWidget {
   final Status status; 
