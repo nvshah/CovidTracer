@@ -68,13 +68,18 @@ class _DashboardState extends State<Dashboard> {
             date: _covidData?.lastRefreshedDate,
           ),
           //Statuses
-          ListView.builder(
-            itemCount: _statuses.length,
-            itemBuilder: (ctxt, idx) => StatusCard(
-              status: _statuses[idx],
-              numbers: _covidData != null
-                  ? _covidData.statusFigures[_statuses[idx]]
-                  : null,
+          Expanded(
+            //Here ListView is used under Column, so need to provide specific height to ListView
+            //otherwise it will give error as Column can grow as much as it can & Listview will not end up finding it's height
+            //via Expanded we will ensure that Listview take rest of screen height
+            child: ListView.builder(
+              itemCount: _statuses.length,
+              itemBuilder: (ctxt, idx) => StatusCard(
+                status: _statuses[idx],
+                numbers: _covidData != null
+                    ? _covidData.statusFigures[_statuses[idx]]
+                    : null,
+              ),
             ),
           ),
         ],
