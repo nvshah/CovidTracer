@@ -3,6 +3,8 @@ import 'package:provider/provider.dart';
 import 'package:logging/logging.dart';
 
 import './services/covid_api_service.dart';
+import './ui/dashboard.dart';
+import './repositories/data_repository.dart';
 
 void main() {
   _setupLogging();
@@ -14,15 +16,18 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return Provider(
       // The initialized CovidApiService is now available down the widget tree
-      builder: (_) => CovidApiService.create(),
+      create: (_) => DataRepository(
+        covidApiService: CovidApiService.create(),
+      ),
       //Always call dispose on the ChopperClient to release resources
-      dispose: (ctxt, CovidApiService service) => service.client.dispose(),
+      dispose: (ctxt, DataRepository dataRepository) => dataRepository.covidApiService.client.dispose(),
       child: MaterialApp(
         title: 'Covid Tracker',
         theme: ThemeData.dark().copyWith(
           scaffoldBackgroundColor: Color(0xFF101010),
           cardColor: Color(0xFF222222),
         ),
+        home: Dashboard(),
       ),
     );
   }
