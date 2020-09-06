@@ -6,9 +6,13 @@ import 'package:built_value/serializer.dart';
 part 'stats_count.g.dart';
 
 abstract class StatsCount implements Built<StatsCount, StatsCountBuilder> {
+  @nullable
   int get total;
+  @nullable
   int get recovered;
+  @nullable
   int get deaths;
+  @nullable
   int get active;
 
   StatsCount._();

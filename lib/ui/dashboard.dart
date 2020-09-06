@@ -22,6 +22,11 @@ class _DashboardState extends State<Dashboard> {
   @override
   void initState() {
     super.initState();
+     // get the data from cache prior to fetching data from server
+    // so we will see data 2 times in our screen when we open app i.e 1st from cache & 2nd data updated from server
+    final dataRepository = Provider.of<DataRepository>(context, listen: false);
+    //OFFLINE mode
+    _covidData = dataRepository.getCachedData;
     _updateData();
   }
 

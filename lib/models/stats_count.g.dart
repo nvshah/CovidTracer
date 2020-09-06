@@ -17,18 +17,31 @@ class _$StatsCountSerializer implements StructuredSerializer<StatsCount> {
   @override
   Iterable<Object> serialize(Serializers serializers, StatsCount object,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object>[
-      'total',
-      serializers.serialize(object.total, specifiedType: const FullType(int)),
-      'recovered',
-      serializers.serialize(object.recovered,
-          specifiedType: const FullType(int)),
-      'deaths',
-      serializers.serialize(object.deaths, specifiedType: const FullType(int)),
-      'active',
-      serializers.serialize(object.active, specifiedType: const FullType(int)),
-    ];
-
+    final result = <Object>[];
+    if (object.total != null) {
+      result
+        ..add('total')
+        ..add(serializers.serialize(object.total,
+            specifiedType: const FullType(int)));
+    }
+    if (object.recovered != null) {
+      result
+        ..add('recovered')
+        ..add(serializers.serialize(object.recovered,
+            specifiedType: const FullType(int)));
+    }
+    if (object.deaths != null) {
+      result
+        ..add('deaths')
+        ..add(serializers.serialize(object.deaths,
+            specifiedType: const FullType(int)));
+    }
+    if (object.active != null) {
+      result
+        ..add('active')
+        ..add(serializers.serialize(object.active,
+            specifiedType: const FullType(int)));
+    }
     return result;
   }
 
@@ -80,20 +93,7 @@ class _$StatsCount extends StatsCount {
       (new StatsCountBuilder()..update(updates)).build();
 
   _$StatsCount._({this.total, this.recovered, this.deaths, this.active})
-      : super._() {
-    if (total == null) {
-      throw new BuiltValueNullFieldError('StatsCount', 'total');
-    }
-    if (recovered == null) {
-      throw new BuiltValueNullFieldError('StatsCount', 'recovered');
-    }
-    if (deaths == null) {
-      throw new BuiltValueNullFieldError('StatsCount', 'deaths');
-    }
-    if (active == null) {
-      throw new BuiltValueNullFieldError('StatsCount', 'active');
-    }
-  }
+      : super._();
 
   @override
   StatsCount rebuild(void Function(StatsCountBuilder) updates) =>
